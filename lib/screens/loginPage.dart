@@ -7,6 +7,7 @@ import 'package:mata_kuliah/screens/homePage.dart';
 import 'package:mata_kuliah/screens/register.dart';
 import 'package:mata_kuliah/utils/validator.dart';
 import 'package:mata_kuliah/utils/fire_auth.dart';
+import 'package:mata_kuliah/utils/firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -26,7 +27,6 @@ class LoginPageState extends State<LoginPage> {
   final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
-  //bool _isVisible = true;
 
   void _toggleObscureText() {
     setState(() {
@@ -281,10 +281,7 @@ class LoginPageState extends State<LoginPage> {
                                                         ),
                                                       );
                                                     } else {
-                                                      // Handle the case where login failed
                                                       print("Login failed");
-                                                      // You can also show a relevant error message to the user
-                                                      // For example, you can use a Flutter Toast or a SnackBar:
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(

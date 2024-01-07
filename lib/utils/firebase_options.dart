@@ -23,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,38 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBhSslVzeTQWb76pXLQkoahwYeF7Rgaqj4',
-    appId: '1:411540933682:web:e46559b1324c6a1118002b',
-    messagingSenderId: '411540933682',
-    projectId: 'sealabus-9f7a8',
-    authDomain: 'sealabus-9f7a8.firebaseapp.com',
-    storageBucket: 'sealabus-9f7a8.appspot.com',
-    measurementId: 'G-BMG7GDSD3T',
+    apiKey: 'AIzaSyDWHsOKDUpaxff9PpERiLnvYZtww-8J6mk',
+    appId: '1:991042230435:web:f842267613f9a531fb0716',
+    messagingSenderId: '991042230435',
+    projectId: 'matakuliah-8f458',
+    authDomain: 'matakuliah-8f458.firebaseapp.com',
+    storageBucket: 'matakuliah-8f458.appspot.com',
+    measurementId: 'G-43M1WCML8N',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCEFkCWuH0mBXTnWtlSlTRjdYxsTF1mjtM',
-    appId: '1:411540933682:android:7cc3688658aa284818002b',
-    messagingSenderId: '411540933682',
-    projectId: 'sealabus-9f7a8',
-    storageBucket: 'sealabus-9f7a8.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAU3J82gsx9VS1od4_nTVGeeItK7l1LyU4',
-    appId: '1:411540933682:ios:9b74071c59e6540218002b',
-    messagingSenderId: '411540933682',
-    projectId: 'sealabus-9f7a8',
-    storageBucket: 'sealabus-9f7a8.appspot.com',
-    iosBundleId: 'com.example.mataKuliah',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAU3J82gsx9VS1od4_nTVGeeItK7l1LyU4',
-    appId: '1:411540933682:ios:886e3f7d06e3151f18002b',
-    messagingSenderId: '411540933682',
-    projectId: 'sealabus-9f7a8',
-    storageBucket: 'sealabus-9f7a8.appspot.com',
-    iosBundleId: 'com.example.mataKuliah.RunnerTests',
+    apiKey: 'AIzaSyBCkXBnbuKp4QeMDcusLuaJq4S5hMcLfTg',
+    appId: '1:991042230435:android:321100c2a3584197fb0716',
+    messagingSenderId: '991042230435',
+    projectId: 'matakuliah-8f458',
+    storageBucket: 'matakuliah-8f458.appspot.com',
   );
 }
