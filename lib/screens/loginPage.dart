@@ -26,6 +26,7 @@ class LoginPageState extends State<LoginPage> {
   final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
+  //bool _isVisible = true;
 
   void _toggleObscureText() {
     setState(() {
@@ -47,6 +48,12 @@ class LoginPageState extends State<LoginPage> {
     }
 
     return firebaseApp;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeFirebase();
   }
 
   @override
@@ -113,19 +120,21 @@ class LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
-                              child: Align(
-                                alignment: Alignment(-0.7, 0.0),
-                                child: Text(
-                                  "Login",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 25,
-                                    color: Color(0xff000000),
+                            Form(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
+                                child: Align(
+                                  alignment: Alignment(-0.7, 0.0),
+                                  child: Text(
+                                    "Login",
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 25,
+                                      color: Color(0xff000000),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -170,7 +179,7 @@ class LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 15.0),
-                                Container(
+                                Form(
                                   key: _formKey,
                                   child: Column(
                                     children: <Widget>[
@@ -242,15 +251,22 @@ class LoginPageState extends State<LoginPage> {
                                                       _isProcessing = true;
                                                     });
 
+                                                    String email =
+                                                        _emailTextController
+                                                            .text;
+                                                    String password =
+                                                        _passwordTextController
+                                                            .text;
+
+                                                    print(
+                                                        "Email: $email, Password: $password");
+
                                                     User? user = await FireAuth
                                                         .signInUsingEmailPassword(
-                                                      email:
-                                                          _emailTextController
-                                                              .text,
-                                                      password:
-                                                          _passwordTextController
-                                                              .text,
+                                                      email: email,
+                                                      password: password,
                                                     );
+
                                                     setState(() {
                                                       _isProcessing = false;
                                                     });
@@ -262,6 +278,21 @@ class LoginPageState extends State<LoginPage> {
                                                           builder: (context) =>
                                                               HomePage(
                                                                   user: user),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      // Handle the case where login failed
+                                                      print("Login failed");
+                                                      // You can also show a relevant error message to the user
+                                                      // For example, you can use a Flutter Toast or a SnackBar:
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              "Invalid email or password. Please try again."),
+                                                          backgroundColor:
+                                                              Colors.red,
                                                         ),
                                                       );
                                                     }
