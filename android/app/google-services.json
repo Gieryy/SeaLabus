@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "991042230435",
+    "project_id": "matakuliah-8f458",
+    "storage_bucket": "matakuliah-8f458.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991042230435:android:321100c2a3584197fb0716",
+        "android_client_info": {
+          "package_name": "com.example.mata_kuliah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCkXBnbuKp4QeMDcusLuaJq4S5hMcLfTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
