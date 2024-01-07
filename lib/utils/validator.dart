@@ -35,7 +35,7 @@ class Validator {
 
     if (password.isEmpty) {
       return 'Password can\'t be empty';
-    } else if (password.length < 8) {
+    } else if (password.length < 6) {
       return 'Enter a password with a length of at least 6';
     } else if (!passwordRegExp.hasMatch(password)) {
       return 'Enter a correct password';
@@ -52,8 +52,8 @@ class Validator {
 
     if (nrp.isEmpty) {
       return 'NRP can\'t be empty';
-    } else if (nrp.length < 9) {
-      return 'Enter a nrp with a length of at least 6';
+    } else if (nrp.length < 8) {
+      return 'Enter a nrp with a length of at least 8';
     } else if (!nrpRegExp.hasMatch(nrp)) {
       return 'Enter a correct nrp';
     }
