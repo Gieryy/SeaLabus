@@ -5,6 +5,7 @@ class FireAuth {
   //For registring a new user
   static Future<User?> registerUsingEmailPassword({
     required String name,
+    required String nrp,
     required String email,
     required String password,
   }) async {
