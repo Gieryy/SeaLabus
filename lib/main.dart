@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mata_kuliah/firebase_options.dart';
 import 'package:mata_kuliah/screens/homePage.dart';
 import 'package:mata_kuliah/screens/forgotPassword.dart';
 import 'package:mata_kuliah/screens/loginPage.dart';
@@ -7,14 +8,13 @@ import 'package:mata_kuliah/screens/register.dart';
 import 'package:mata_kuliah/screens/splashScreen.dart';
 import 'package:mata_kuliah/screens/landingPage.dart';
 import 'utils/fire_auth.dart';
-import 'utils/firebase_options.dart';
 
-void main() {
-  //   WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
