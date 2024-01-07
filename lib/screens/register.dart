@@ -49,7 +49,7 @@ class RegisterPageState extends State<RegisterPage> {
 
                   ///***If you have exported images you must have to copy those images in assets/images directory.
                   Image(
-                image: AssetImage("lib/assets/Group2.png"),
+                image: AssetImage("assets/Group2.png"),
                 height: 120,
                 width: 150,
                 fit: BoxFit.cover,
@@ -469,7 +469,7 @@ class RegisterPageState extends State<RegisterPage> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Image(
-                          image: AssetImage("lib/assets/logobawah.png"),
+                          image: AssetImage("assets/logobawah.png"),
                           fit: BoxFit.fill,
                         ),
                       ],
