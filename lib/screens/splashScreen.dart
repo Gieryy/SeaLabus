@@ -9,11 +9,26 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => SplashScreenState();
 }
 
-class SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _animationController.forward();
 
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
@@ -25,6 +40,7 @@ class SplashScreenState extends State<SplashScreen> {
   void dispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -33,11 +49,20 @@ class SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/SeaLabus.png', height: 400, width: 400),
-          ],
+        child: AnimatedBuilder(
+          animation: _opacityAnimation,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _opacityAnimation.value,
+              child: child,
+            );
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/SeaLabus.png', height: 400, width: 400),
+            ],
+          ),
         ),
       ),
     );
