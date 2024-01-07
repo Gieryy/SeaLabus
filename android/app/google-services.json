@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "411540933682",
-    "project_id": "sealabus-9f7a8",
-    "storage_bucket": "sealabus-9f7a8.appspot.com"
+    "project_number": "991042230435",
+    "project_id": "matakuliah-8f458",
+    "storage_bucket": "matakuliah-8f458.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411540933682:android:7cc3688658aa284818002b",
+        "mobilesdk_app_id": "1:991042230435:android:321100c2a3584197fb0716",
         "android_client_info": {
           "package_name": "com.example.mata_kuliah"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCEFkCWuH0mBXTnWtlSlTRjdYxsTF1mjtM"
+          "current_key": "AIzaSyBCkXBnbuKp4QeMDcusLuaJq4S5hMcLfTg"
         }
       ],
       "services": {

@@ -1,211 +1,137 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mata_kuliah/utils/validator.dart';
 
 class ForgotPassPage extends StatefulWidget {
-  const ForgotPassPage({super.key});
+  const ForgotPassPage({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPassPage> createState() => ForgotPassPageState();
+  _ForgotPassPageState createState() => _ForgotPassPageState();
 }
 
-class ForgotPassPageState extends State<ForgotPassPage> {
+class _ForgotPassPageState extends State<ForgotPassPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailTextController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isResetting = false;
+
+  Future<void> _resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password reset email sent!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to send reset email. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } finally {
+      setState(() {
+        _isResetting = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffffffff),
-      body: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 40, 0, 20),
-              child:
-
-                  ///***If you have exported images you must have to copy those images in assets/images directory.
-                  Image(
-                image:
-                    AssetImage("assets/images/SeaLabus-removebg-preview-4.png"),
-                height: 100,
-                width: 140,
-                fit: BoxFit.contain,
+            Image.asset(
+              'assets/SeaLabus.png',
+              height: 300,
+              width: 300,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Reset Password",
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontSize: 25,
+                color: Color(0xff000000),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: SingleChildScrollView(
+            Form(
+              key: _formKey,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        "You forgot your password?",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 22,
-                          color: Color(0xff000000),
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _emailTextController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) =>
+                          Validator.validateEmail(email: value),
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: GoogleFonts.plusJakartaSans(
+                          textStyle: const TextStyle(color: Colors.grey),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(6.0),
+                          borderSide: const BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 16, 0, 15),
-                      child: Text(
-                        "Enter your email address. We will send you and email to reset your password.",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 10,
-                          color: Color(0xff000000),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 210, 0),
-                      child: Text(
-                        "Text",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
-                      child: TextField(
-                        controller: TextEditingController(),
-                        obscureText: false,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12,
-                          color: Color(0xff000000),
-                        ),
-                        decoration: InputDecoration(
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          hintText: "Enter Your Email here...",
-                          hintStyle: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            color: Color(0xff000000),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xffffffff),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(8),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 210, 0),
-                      child: Text(
-                        "Text",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
-                      child: TextField(
-                        controller: TextEditingController(),
-                        obscureText: true,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
-                        ),
-                        decoration: InputDecoration(
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide:
-                                BorderSide(color: Color(0xff000000), width: 1),
-                          ),
-                          hintText: "Hint Text",
-                          hintStyle: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                            color: Color(0xff000000),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xffffffff),
-                          isDense: false,
-                          contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                      child: MaterialButton(
-                        onPressed: () {},
-                        color: Color(0xffffc962),
-                        elevation: 8,
+                    const SizedBox(height: 60),
+                    ElevatedButton(
+                      onPressed: _isResetting
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  _isResetting = true;
+                                });
+                                _resetPassword(_emailTextController.text);
+                              }
+                            },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xff4a90bf),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        padding: EdgeInsets.all(16),
-                        child: Text(
-                          "Reset Password",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                        textColor: Color(0xff000000),
-                        height: 45,
-                        minWidth: MediaQuery.of(context).size.width,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: _isResetting
+                            ? const CircularProgressIndicator()
+                            : Text(
+                                'Reset Password',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ],

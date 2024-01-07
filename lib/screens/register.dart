@@ -45,6 +45,44 @@ class RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
+
+                Container(
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    color: Color(0x1f000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                    border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
+              child:
+                  Image(
+                image: AssetImage("assets/Group2.png"),
+                height: 120,
+                width: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Align(
+              alignment: Alignment(0.0, 0.0),
+              child: Card(
+                margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                color: Color(0xffffffff),
+                shadowColor: Color(0xff000000),
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0)),
+                  side: BorderSide(color: Color(0x4d9e9e9e), width: 1),
+                ),
+                child: Column(
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -586,16 +624,17 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Image(
-                              image: AssetImage("lib/assets/logobawah.png"),
-                              fit: BoxFit.fill,
-                            ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Image(
+                          image: AssetImage("assets/logobawah.png"),
+                          fit: BoxFit.fill,
+
                           ],
+
                         ),
                       ],
                     ),

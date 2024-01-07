@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mata_kuliah/firebase_options.dart';
+import 'package:mata_kuliah/utils/firebase_options.dart';
 import 'package:mata_kuliah/screens/homePage.dart';
 import 'package:mata_kuliah/screens/forgotPassword.dart';
 import 'package:mata_kuliah/screens/loginPage.dart';
