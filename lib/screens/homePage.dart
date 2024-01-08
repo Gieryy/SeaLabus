@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mata_kuliah/main.dart';
+import 'package:mata_kuliah/screens/addMataKuliah.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
-  const HomePage({super.key, required this.user});
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
@@ -28,109 +30,138 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text('SeaLabus',
-            style:
-                GoogleFonts.ubuntu(fontSize: 14, fontWeight: FontWeight.w600)),
+        title: Text(
+          'SeaLabus',
+          style: GoogleFonts.ubuntu(fontSize: 14, fontWeight: FontWeight.w600),
+        ),
         backgroundColor: const Color(0xFFEAF2FF),
       ),
       backgroundColor: Color(0xffffffff),
-      body: ListView(
-        reverse: true,
-        physics: ClampingScrollPhysics(),
-        children: [
-          Container(
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.zero,
-            decoration: BoxDecoration(
-              color: Color(0xffffffff),
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.zero,
-              border: Border.all(color: Color(0x4d9e9e9e), width: 1),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 39, 20, 35),
-                  child: TextField(
-                    controller: TextEditingController(),
-                    obscureText: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    style: TextStyle(
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Container(
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
+          decoration: BoxDecoration(
+            color: Color(0xffffffff),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.zero,
+            border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 39, 20, 35),
+                child: TextField(
+                  controller: TextEditingController(),
+                  obscureText: false,
+                  textAlign: TextAlign.start,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                    color: Color(0xff000000),
+                  ),
+                  decoration: InputDecoration(
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          BorderSide(color: Color(0xff000000), width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          BorderSide(color: Color(0xff000000), width: 1),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          BorderSide(color: Color(0xff000000), width: 1),
+                    ),
+                    hintText: "what courses are you looking for",
+                    hintStyle: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
-                      fontSize: 14,
+                      fontSize: 10,
                       color: Color(0xff000000),
                     ),
-                    decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide:
-                            BorderSide(color: Color(0xff000000), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide:
-                            BorderSide(color: Color(0xff000000), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide:
-                            BorderSide(color: Color(0xff000000), width: 1),
-                      ),
-                      hintText: "what courses are you looking for",
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 10,
-                        color: Color(0xff000000),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xffffffff),
-                      isDense: false,
-                      contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                      prefixIcon: Icon(Icons.search,
-                          color: Color(0xff212435), size: 24),
+                    filled: true,
+                    fillColor: Color(0xffffffff),
+                    isDense: false,
+                    contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    prefixIcon:
+                        Icon(Icons.search, color: Color(0xff212435), size: 24),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Align(
+                  alignment: Alignment(-0.8, 0.0),
+                  child: Text(
+                    'Courses',
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.clip,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 24,
+                      color: Color(0xff000000),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: Align(
-                    alignment: Alignment(-0.8, 0.0),
-                    child: Text(
-                      "Courses",
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 18,
-                        color: Color(0xff000000),
+              ),
+              SizedBox(height: 6),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 5, 0, 5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.blue,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
                       ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddMataKuliah()),
+                        );
+                      },
+                      child: Text('Buat Data Matakuliah Baru'),
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 6),
+              Container(
+                height: MediaQuery.of(context).size.height - 200,
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: 8,
+                  itemBuilder: (BuildContext context, int index) {
+                    return coursesCard('ISB - 311 Sistem Informasi Seluler',
+                        '3jam', 'Ruangan 42021');
+                  },
                 ),
-                SizedBox(height: 6),
-                Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: 8,
-                    itemBuilder: (BuildContext context, int index) {
-                      return coursesCard('ISB - 311 Sistem Informasi Seluler',
-                          '3jam', 'Ruangan 42021');
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

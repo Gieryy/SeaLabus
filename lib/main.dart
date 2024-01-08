@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mata_kuliah/screens/addMataKuliah.dart';
 import 'package:mata_kuliah/utils/firebase_options.dart';
 import 'package:mata_kuliah/screens/homePage.dart';
 import 'package:mata_kuliah/screens/forgotPassword.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         'login': (context) => LoginPage(),
         'register': (context) => RegisterPage(),
         'forgot': (context) => ForgotPassPage(),
+        'addMataKuliah': (context) => AddMataKuliah()
       },
     );
   }

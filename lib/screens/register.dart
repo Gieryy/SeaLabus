@@ -46,7 +46,7 @@ class RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
               child: Image(
-                image: AssetImage("lib/assets/Group2.png"),
+                image: AssetImage("assets/Group2.png"),
                 height: 120,
                 width: 150,
                 fit: BoxFit.cover,
@@ -466,7 +466,7 @@ class RegisterPageState extends State<RegisterPage> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Image(
-                          image: AssetImage("lib/assets/logobawah.png"),
+                          image: AssetImage("assets/logobawah.png"),
                           fit: BoxFit.fill,
                         ),
                       ],
