@@ -45,10 +45,7 @@ class RegisterPageState extends State<RegisterPage> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
-              child:
-
-                  ///***If you have exported images you must have to copy those images in assets/images directory.
-                  Image(
+              child: Image(
                 image: AssetImage("lib/assets/Group2.png"),
                 height: 120,
                 width: 150,
