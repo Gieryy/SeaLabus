@@ -10,13 +10,12 @@ import 'package:mata_kuliah/screens/splashScreen.dart';
 import 'package:mata_kuliah/screens/landingPage.dart';
 import 'utils/fire_auth.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

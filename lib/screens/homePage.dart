@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mata_kuliah/main.dart';
 import 'package:mata_kuliah/screens/addMataKuliah.dart';
+import 'package:mata_kuliah/utils/firebase_options.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -15,7 +17,6 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   late User _currentUser;
-
   get user => _currentUser;
 
   @override
@@ -147,18 +148,66 @@ class HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 6),
               Container(
-                height: MediaQuery.of(context).size.height - 200,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: 8,
-                  itemBuilder: (BuildContext context, int index) {
-                    return coursesCard('ISB - 311 Sistem Informasi Seluler',
-                        '3jam', 'Ruangan 42021');
-                  },
-                ),
-              ),
+                  height: MediaQuery.of(context).size.height - 200,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('matakuliah')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Data is still loading
+                        return CircularProgressIndicator();
+                      }
+
+                      if (snapshot.hasError) {
+                        // Print the error for debugging
+                        print('Error: ${snapshot.error}');
+                        return Text('Error loading data');
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        // No data available
+                        return Text('No data available');
+                      }
+
+                      List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+                      return ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          try {
+                            if (index < 0 || index >= documents.length) {
+                              throw RangeError('Index out of range: $index');
+                            }
+
+                            Map<String, dynamic>? courseData = documents[index]
+                                .data() as Map<String, dynamic>?;
+
+                            if (courseData == null) {
+                              // Handle null data
+                              return SizedBox();
+                            }
+
+                            return coursesCard(
+                              courseData['kodeMataKuliah'] ?? '',
+                              courseData['namaMataKuliah'] ?? '',
+                              courseData['sks'] ?? 0,
+                              courseData['jamMasuk'] ?? '',
+                              courseData['jamKeluar'] ?? '',
+                              courseData['gedung'] ?? '',
+                              courseData['ruangan'] ?? '',
+                              courseData['dosen'] ?? '',
+                            );
+                          } catch (e) {
+                            // Print error details for debugging
+                            print('Error in StreamBuilder: $e');
+                            return SizedBox();
+                          }
+                        },
+                      );
+                    },
+                  )),
             ],
           ),
         ),
@@ -190,9 +239,10 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget coursesCard(String title, String time, String place) {
+  Widget coursesCard(String kodeMataKuliah, String namaMataKuliah, int sks,
+      String jamMasuk, jamKeluar, String gedung, String ruangan, String dosen) {
     return SizedBox(
-      height: 125,
+      height: 230,
       width: 205,
       child: Card(
         elevation: 0,
@@ -205,7 +255,7 @@ class HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
+                "$kodeMataKuliah $namaMataKuliah",
                 style: GoogleFonts.ubuntu(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -214,7 +264,7 @@ class HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 4),
               Text(
-                time,
+                'SKS : $sks',
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -222,7 +272,23 @@ class HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 4),
               Text(
-                place,
+                "Jadwal : $jamMasuk - $jamKeluar",
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "Ruangan : Gedung $gedung - $ruangan",
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "Dosen : $dosen",
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
