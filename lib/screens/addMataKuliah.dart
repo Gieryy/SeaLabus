@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mata_kuliah/screens/fileMataKuliah.dart';
 
 class AddMataKuliah extends StatefulWidget {
   @override
@@ -50,6 +51,20 @@ class _AddMataKuliahState extends State<AddMataKuliah> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  ElevatedButton(
+                    child: Text('Add Data From CSV'),
+                    onPressed: () async {
+                      MatakuliahService matakuliahService = MatakuliahService();
+                      await matakuliahService.importmatakuliahFromCSV(context);
+
+                      // Optionally, you can provide feedback to the user after the operation is completed
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Operation completed.'),
+                        ),
+                      );
+                    },
+                  ),
                   Text('Kode MataKuliah',
                       style: GoogleFonts.poppins(
                           fontSize: 16, fontWeight: FontWeight.w500)),
@@ -180,38 +195,26 @@ class _AddMataKuliahState extends State<AddMataKuliah> {
                       fontSize: 12, fontWeight: FontWeight.normal),
                 ),
                 onPressed: () {
-                  String sksValue = sks.text.trim();
+                  matakuliah.add({
+                    'kodeMataKuliah': kodeMataKuliahController.text,
+                    'namaMataKuliah': namaMataKuliahController.text,
+                    'sks': sks.text,
+                    'jamMasuk': jamMasuk.text,
+                    'jamKeluar': jamKeluar.text,
+                    'gedung': gedung.text,
+                    'ruangan': ruangan.text,
+                    'dosen': dosen.text,
+                  });
+                  kodeMataKuliahController.text = '';
+                  namaMataKuliahController.text = '';
+                  sks.text = '';
+                  jamMasuk.text = '';
+                  jamKeluar.text = '';
+                  gedung.text = '';
+                  ruangan.text = '';
+                  dosen.text = '';
 
-                  if (sksValue.isNotEmpty) {
-                    try {
-                      int sksInt = int.parse(sksValue);
-
-                      matakuliah.add({
-                        'kodeMataKuliah': kodeMataKuliahController.text,
-                        'namaMataKuliah': namaMataKuliahController.text,
-                        'sks': sksInt,
-                        'jamMasuk': jamMasuk.text,
-                        'jamKeluar': jamKeluar.text,
-                        'gedung': gedung.text,
-                        'ruangan': ruangan.text,
-                        'dosen': dosen.text,
-                      });
-                      kodeMataKuliahController.text = '';
-                      namaMataKuliahController.text = '';
-                      sks.text = '';
-                      jamMasuk.text = '';
-                      jamKeluar.text = '';
-                      gedung.text = '';
-                      ruangan.text = '';
-                      dosen.text = '';
-
-                      Navigator.pop(context);
-                    } catch (e) {
-                      print('Error parsing SKS: $e');
-                    }
-                  } else {
-                    print('SKS field is empty');
-                  }
+                  Navigator.pop(context);
                 },
               ),
             ],

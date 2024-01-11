@@ -8,6 +8,8 @@ import 'package:mata_kuliah/screens/loginPage.dart';
 import 'package:mata_kuliah/screens/register.dart';
 import 'package:mata_kuliah/screens/splashScreen.dart';
 import 'package:mata_kuliah/screens/landingPage.dart';
+import 'package:mata_kuliah/screens/fileMataKuliah.dart';
+import 'package:mata_kuliah/screens/tableMataKuliah.dart';
 import 'utils/fire_auth.dart';
 
 void main() async {
@@ -32,7 +34,9 @@ class MyApp extends StatelessWidget {
         'login': (context) => LoginPage(),
         'register': (context) => RegisterPage(),
         'forgot': (context) => ForgotPassPage(),
-        'addMataKuliah': (context) => AddMataKuliah()
+        'addMataKuliah': (context) => AddMataKuliah(),
+        'tableMataKuliah': (context) => Tabelmatakuliah(),
+        // 'fileMataKuliah': (context) => matakuliah(),
       },
     );
   }

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mata_kuliah/main.dart';
 import 'package:mata_kuliah/screens/addMataKuliah.dart';
-import 'package:mata_kuliah/utils/firebase_options.dart';
+import 'package:mata_kuliah/screens/editMataKuliah.dart';
+import 'package:mata_kuliah/screens/profilePage.dart';
+import 'package:mata_kuliah/screens/schedule.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -155,19 +157,15 @@ class HomePageState extends State<HomePage> {
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // Data is still loading
-                        return CircularProgressIndicator();
-                      }
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {}
 
                       if (snapshot.hasError) {
-                        // Print the error for debugging
                         print('Error: ${snapshot.error}');
                         return Text('Error loading data');
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        // No data available
                         return Text('No data available');
                       }
 
@@ -185,14 +183,13 @@ class HomePageState extends State<HomePage> {
                                 .data() as Map<String, dynamic>?;
 
                             if (courseData == null) {
-                              // Handle null data
                               return SizedBox();
                             }
 
                             return coursesCard(
                               courseData['kodeMataKuliah'] ?? '',
                               courseData['namaMataKuliah'] ?? '',
-                              courseData['sks'] ?? 0,
+                              courseData['sks'] ?? '',
                               courseData['jamMasuk'] ?? '',
                               courseData['jamKeluar'] ?? '',
                               courseData['gedung'] ?? '',
@@ -200,7 +197,6 @@ class HomePageState extends State<HomePage> {
                               courseData['dosen'] ?? '',
                             );
                           } catch (e) {
-                            // Print error details for debugging
                             print('Error in StreamBuilder: $e');
                             return SizedBox();
                           }
@@ -233,23 +229,70 @@ class HomePageState extends State<HomePage> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
+            if (_currentIndex == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage(user: user)),
+              );
+            }
+            if (_currentIndex == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddMataKuliah()),
+              );
+            }
+            if (_currentIndex == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfilePage(user: user)),
+              );
+            }
           });
         },
       ),
     );
   }
 
-  Widget coursesCard(String kodeMataKuliah, String namaMataKuliah, int sks,
-      String jamMasuk, jamKeluar, String gedung, String ruangan, String dosen) {
-    return SizedBox(
-      height: 230,
-      width: 205,
+  Widget coursesCard(
+      String kodeMataKuliah,
+      String namaMataKuliah,
+      String sks,
+      String jamMasuk,
+      String? jamKeluar,
+      String gedung,
+      String ruangan,
+      String dosen) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditMataKuliah(),
+            settings: RouteSettings(
+              arguments: {
+                'kodeMataKuliah': kodeMataKuliah,
+                'namaMataKuliah': namaMataKuliah,
+                'sks': sks,
+                'jamMasuk': jamMasuk,
+                'jamKeluar': jamKeluar,
+                'gedung': gedung,
+                'ruangan': ruangan,
+                'dosen': dosen,
+              },
+            ),
+          ),
+        );
+      },
       child: Card(
         elevation: 0,
         color: const Color(0xFFEAF2FF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(12),
         child: Container(
           padding: const EdgeInsets.all(20),
+          width: 59,
+          height: 200,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,15 +305,7 @@ class HomePageState extends State<HomePage> {
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 4),
-              Text(
-                'SKS : $sks',
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 8),
               Text(
                 "Jadwal : $jamMasuk - $jamKeluar",
                 style: GoogleFonts.poppins(
@@ -280,20 +315,21 @@ class HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 4),
               Text(
-                "Ruangan : Gedung $gedung - $ruangan",
+                "Ruangan : Gedung $gedung - Ruangan $ruangan",
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Dosen Pengajar : $dosen",
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                "Dosen : $dosen",
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
             ],
           ),
         ),

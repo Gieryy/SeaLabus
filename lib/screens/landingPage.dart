@@ -30,11 +30,8 @@ class LandingPageState extends State<LandingPage> {
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child:
-
-                      ///***If you have exported images you must have to copy those images in assets/images directory.
-                      Image(
-                    image: AssetImage("lib/assets/logo.png"),
+                  child: Image(
+                    image: AssetImage("assets/logo.png"),
                     width: 130,
                     fit: BoxFit.fill,
                   ),
